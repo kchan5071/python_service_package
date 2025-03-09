@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/opt/homebrew/anaconda3/bin/python
 
 import subprocess
 import argparse
@@ -29,11 +29,11 @@ def stop_services():
 
 def clear_sockets():
     try:
-        shutil.rmtree('/tmp/test')
+        shutil.rmtree('/tmp/python-services')
     except FileNotFoundError:
         print('No sockets to clear.')
         return
-    os.makedirs('/tmp/test')
+    os.makedirs('/tmp/python-services')
     print('Sockets cleared.')
 
 if __name__ == '__main__':
