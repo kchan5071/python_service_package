@@ -5,9 +5,11 @@ import argparse
 import os
 import shutil
 
-def get_service_pids():
+import config_parser
+
+def get_service_pids(service_csv):
     service_pids = {}
-    with open('services.csv', 'r') as file:
+    with open(service_csv, 'r') as file:
         for line in file:
             service, pid = line.strip().split(',')
             service_pids[service] = pid
@@ -17,19 +19,24 @@ def stop_service(service, pid):
     try:
         process = subprocess.Popen(['kill', pid])
         process.wait()
-        print(f'Stopped service {service}.')
+        print(f'Stopped service {service} with pid {pid}.')
     except:
         print(f'Could not stop service {service}.')
 
-def stop_services():
-    service_pids = get_service_pids()
+def stop_services(service_csv):
+    if os.path.exists(service_csv):
+        service_csv = os.path.join(os.getcwd(), service_csv)
+    else:
+        service_csv = os.path.join(os.getcwd(), 'services.csv')
+ 
+    service_pids = get_service_pids(service_csv)
     for service, pid in service_pids.items():
         stop_service(service, pid)
     print('All services stopped.')
 
-def clear_sockets():
+def clear_sockets(socket_directory):
     try:
-        shutil.rmtree('/tmp/python-services')
+        shutil.rmtree(socket_directory)
     except FileNotFoundError:
         print('No sockets to clear.')
         return
@@ -37,9 +44,8 @@ def clear_sockets():
     print('Sockets cleared.')
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Stop services.')
-    parser.add_argument('-c', '--clear_sockets', help='Clear the sockets.', default=True)
-    args = parser.parse_args()
-    if args.clear_sockets:
-        clear_sockets()
-    stop_services()
+    config_parser = config_parser.read_config('config.yaml')
+    if config_parser['clear_socket']:
+        clear_sockets(config_parser['socket_directory'])
+    if config_parser['stop_services']:
+        stop_services(config_parser['services_csv'])

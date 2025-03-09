@@ -14,9 +14,6 @@ def initialize_socket_directory(socket_directory):
     return socket_directory
 
 def get_process_name_list(user_directory=None):
-    if user_directory is None:
-        user_directory = os.path.join(os.getcwd(), 'services')
-    
     process_name_list = []
     for file in os.listdir(user_directory):
         if file.endswith('.py'):
