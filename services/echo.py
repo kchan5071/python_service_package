@@ -8,7 +8,7 @@ def run_server(socket_name):
             print('Socket file exists.')
             # Clean up the socket file
             try:
-                os.unlink('/tmp/test/' + socket_name)
+                os.unlink('/tmp/python-services' + socket_name)
             except FileNotFoundError:
                 pass
         sock = create_server_socket(socket_name)
@@ -20,7 +20,7 @@ def run_server(socket_name):
         
 def test_socket_connection(socket_name):
     try:
-        os.unlink('/tmp/test/' + socket_name)
+        os.unlink('/tmp/python-services' + socket_name)
     except:
         return True
     return False
@@ -28,7 +28,7 @@ def test_socket_connection(socket_name):
 def create_server_socket(socket_name):
     # Create a TCP/IP socket
     sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-    server_address = '/tmp/test/' + socket_name
+    server_address = '/tmp/python-services' + socket_name
     # Bind the socket to the address
     sock.bind(server_address)
     return sock

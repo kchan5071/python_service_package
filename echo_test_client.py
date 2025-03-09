@@ -19,7 +19,7 @@ def run_client(socket_name):
 def create_client_socket(socket_name):
     # Create a TCP/IP socket
     sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-    server_address = '/tmp/test/' + socket_name
+    server_address = '/tmp/python-services' + socket_name
     # Connect the socket to the server
     print('connecting to %s' % server_address)
     sock.connect(server_address)
