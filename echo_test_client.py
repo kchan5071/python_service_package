@@ -1,5 +1,4 @@
 import socket
-import os
 
 def run_client(socket_name):
     sock = create_client_socket(socket_name)

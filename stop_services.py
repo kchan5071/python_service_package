@@ -1,7 +1,6 @@
 #!/opt/homebrew/anaconda3/bin/python
 
 import subprocess
-import argparse
 import os
 import shutil
 
