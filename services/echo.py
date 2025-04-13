@@ -4,38 +4,47 @@ import os
 
 def run_server(socket_name):
     while True:
+        # Check if the socket file exists
         if not test_socket_connection(socket_name):
             print('Socket file exists.')
-            # Clean up the socket file
             try:
-                os.unlink('/tmp/python-services' + socket_name)
+                os.unlink('/tmp/python-services/' + socket_name)
             except FileNotFoundError:
                 pass
+
+        # Create a socket
         sock = create_server_socket(socket_name)
         sock.listen(1)
+
+        # Wait for a connection
         connection = accept_connection(sock)
+
+        # perform the echo operation
         echo(connection)
+
+        # Clean up the connection
         connection.close()
         sock.close()
         
 def test_socket_connection(socket_name):
     try:
-        os.unlink('/tmp/python-services' + socket_name)
-    except:
+        os.unlink('/tmp/python-services/' + socket_name)
+    except Exception:
         return True
     return False
 
 def create_server_socket(socket_name):
     # Create a TCP/IP socket
     sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-    server_address = '/tmp/python-services' + socket_name
+    server_address = '/tmp/python-services/' + socket_name
+
     # Bind the socket to the address
     sock.bind(server_address)
     return sock
 
 def accept_connection(sock):
     # Wait for a connection
-    connection, client_address = sock.accept()
+    connection, _ = sock.accept()
     return connection
 
 def echo(connection):
