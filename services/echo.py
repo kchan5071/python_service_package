@@ -29,7 +29,7 @@ class EchoServer:
             self.sock.listen(1)
 
             # Wait for a connection
-            self.accept_connection()
+            self.connection, _ = self.sock.accept()
 
             # perform the echo operation
             self.echo()
@@ -52,9 +52,6 @@ class EchoServer:
         # Bind the socket to the address
         self.sock.bind(self.socket_address)
 
-    def accept_connection(self):
-        # Wait for a connection
-        self.connection, _ = self.sock.accept()
 
     def echo(self):
         # Receive the data in small chunks and retransmit it
