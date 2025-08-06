@@ -5,8 +5,8 @@ socket_directory:   /tmp/python-services
 python_executable:  /opt/homebrew/anaconda3/bin/python
 
 #relative path
-service_directory:  /services
-services_csv:       /services.csv
+service_directory:  services
+services_csv:       services.csv
 
 #options
 clear_socket:       True

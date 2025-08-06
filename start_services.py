@@ -83,3 +83,4 @@ if __name__ == '__main__':
     service_list = start_services(config_parser['service_directory'], config_parser['python_executable'])
     write_to_csv(service_list, config_parser['services_csv'])
     print('Services started.')
+    print('Service list:', service_list)

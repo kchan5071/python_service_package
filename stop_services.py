@@ -62,8 +62,8 @@ def clear_sockets(socket_directory: str):
     print('Sockets cleared.')
 
 if __name__ == '__main__':
-    config_parser = config_parser.read_config('config.yaml')
-    if config_parser['clear_socket']:
-        clear_sockets(config_parser['socket_directory'])
-    if config_parser['stop_services']:
-        stop_services(config_parser['services_csv'])
+    config = config_parser.read_config('config.yaml')
+    if config['clear_socket']:
+        clear_sockets(config['socket_directory'])
+    if config['stop_services']:
+        stop_services(config['services_csv'])
