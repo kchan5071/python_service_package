@@ -1,0 +1,9 @@
+[project]
+name = "py-servive-package"
+version = "1.0.0"
+dependencies = [
+    PyYAML==6.0.3
+]
+authors = [name = "Kai Chan", email = "kchan5071@sdsu.edu"]
+requires-python = ">=3.8"
+license = "MIT"
