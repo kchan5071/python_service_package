@@ -1,5 +1,3 @@
-#!/opt/homebrew/anaconda3/bin/python
-
 import subprocess
 import os
 import shutil
@@ -38,7 +36,7 @@ def stop_services(service_csv: str):
     if os.path.exists(service_csv):
         service_csv = os.path.join(os.getcwd(), service_csv)
     else:
-        service_csv = os.path.join(os.getcwd(), config_parser.read_config('config.yaml')['services_csv'])
+        service_csv = os.path.join(os.getcwd(), (config_parser.read_config('config.yaml'))['services_csv'])
  
     # Read the service CSV file and get the PIDs
     service_pids = get_service_pids(service_csv)

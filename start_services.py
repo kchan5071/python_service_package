@@ -1,5 +1,3 @@
-#!/opt/homebrew/anaconda3/bin/python
-
 from typing import List, Tuple
 import os
 import subprocess
@@ -37,7 +35,7 @@ def start_service(service_name: str, service_directory: str, python_executable: 
     for file in os.listdir(service_directory):
         if file.endswith('.py') and file.startswith(service_name):
             #start process
-            process = subprocess.Popen([python_executable, os.path.join(service_directory, service_name)], cwd=service_directory)
+            process = subprocess.Popen([os.path.join(os.getcwd(), python_executable), os.path.join(service_directory, service_name)], cwd=service_directory)
             pid = process.pid
             return (service_name, pid)
     return (None, None)
@@ -50,7 +48,7 @@ def start_services(user_directory: str, python_executable: str) -> List[Tuple[st
     # Check if the directory exists, if not, create it
     if user_directory is None:
         print("No service directory provided, using default: cwd/services")
-    user_directory = os.path.join(os.getcwd(), 'services')
+    user_directory = os.path.join(os.getcwd(), config_parser.read_config('config.yaml')['service_directory'])
 
     # List all Python files in the directory
     name_list = get_process_name_list(user_directory)
@@ -78,8 +76,8 @@ def write_to_csv(services: List[Tuple[str, int]], filename: str) -> None:
             file.write(f'{service[0]},{service[1]}\n')
 
 if __name__ == '__main__':
-    config_parser = config_parser.read_config('config.yaml')
-    initialize_socket_directory(config_parser['socket_directory'])
-    service_list = start_services(config_parser['service_directory'], config_parser['python_executable'])
-    write_to_csv(service_list, config_parser['services_csv'])
+    config = config_parser.read_config('config.yaml')
+    initialize_socket_directory(config['socket_directory'])
+    service_list = start_services(config['service_directory'], config['python_executable'])
+    write_to_csv(service_list, config['services_csv'])
     print('Services started.')
